@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: dani-whatsapp-bot
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node main.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: BOT_NAME
+        value: Dani
+      # Set these in the Render dashboard (don't commit real values):
+      - key: PAIR_PHONE_NUMBER
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: FAL_KEY
+        sync: false
+      # Render injects this automatically — used for self-ping:
+      - key: RENDER_EXTERNAL_URL
+        fromService:
+          type: web
+          name: dani-whatsapp-bot
+          property: host
